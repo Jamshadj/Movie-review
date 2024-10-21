@@ -99,7 +99,7 @@ export default function MainContent() {
   const [totalPages, setTotalPages] = React.useState(0);
   const [movies, setMovies] = React.useState([]);
   const [searchTerm, setSearchTerm] = React.useState(""); // State for the search term
-  const ITEMS_PER_PAGE = 5;
+  const ITEMS_PER_PAGE = 6;
   const [openFilterDialog, setOpenFilterDialog] = React.useState(false);
   const [filters, setFilters] = React.useState({
     language: "",
@@ -119,17 +119,19 @@ export default function MainContent() {
   };
 
   React.useEffect(() => {
+    console.log(searchTerm);
+    
     const fetchMovies = async () => {
       try {
         const response = searchTerm
-          ? await searchMovies(searchTerm, page, ITEMS_PER_PAGE) // Call the search API
+          ? await searchMovies(searchTerm, page, ITEMS_PER_PAGE,filters) // Call the search API
           : await getRatedMovies(page, ITEMS_PER_PAGE); // Call the rated movies API
         setFilterOptions({
           languages: response.data.distinctLanguages || [],
           genres: response.data.distinctGenres || [],
         });
         setMovies(response.data.movies);
-        setTotalPages(Math.ceil(response.data.totalPages / ITEMS_PER_PAGE));
+        setTotalPages(Math.ceil(response.data.totalPages));
       } catch (error) {
         console.error("Error fetching cards:", error);
       }
@@ -177,6 +179,9 @@ export default function MainContent() {
       console.error("Error fetching filtered movies:", error);
     }
   };
+
+  console.log(totalPages,"pages");
+  
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>

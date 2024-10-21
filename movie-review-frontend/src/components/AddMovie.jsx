@@ -29,7 +29,7 @@ export default function AddMovie() {
     language: "",
     ottPlatform: "",
     description: "",
-    userId: "", // Add userId to track movie owner
+    userId: "", 
   });
 
   const [error, setError] = React.useState(""); // State for error message
@@ -68,6 +68,8 @@ export default function AddMovie() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    console.log([name],":", value);
+    
     setMovieData((prevData) => ({
       ...prevData,
       [name]: value,
@@ -82,24 +84,20 @@ export default function AddMovie() {
       return typeof value === "string" && value.trim() === ""; // Only apply trim() to string values
     });
   
-    if (isEmpty) {
-      setError("All fields are required."); // Set error message
-      setOpenError(true); // Open error Snackbar
-      return; // Prevent submission
-    }
-
     try {
       if (isEditMode) {
+        console.log(movieData);
+        
         await updateMovie(movieData.id, movieData); // Update the movie
         setSuccess("Movie updated successfully!"); // Set success message
         // Redirect to the movie detail page
-        navigate(`/view-movie/${movieData.id}`); // Use navigate here
+        navigate(`/movie?edit=${movieData.id}`); // Use navigate here
       } else {
         await addMovie(userId, movieData); // Add new movie
         setSuccess("Movie added successfully!"); // Set success message
 
         // Redirect to the new movie detail page
-        navigate(`/view-movies`); // Use navigate here
+        navigate(`/my-movies`); // Use navigate here
       }
       
       setOpenSuccess(true); // Open success Snackbar

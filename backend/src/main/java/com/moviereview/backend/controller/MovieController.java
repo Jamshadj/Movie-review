@@ -67,6 +67,7 @@ public class MovieController {
             // Update the fields of the movie with new values from the request body
             existingMovie.setTitle(updatedMovie.getTitle());
             existingMovie.setDescription(updatedMovie.getDescription());
+            existingMovie.setDirector(updatedMovie.getDirector());
             existingMovie.setGenre(updatedMovie.getGenre());
             existingMovie.setLanguage(updatedMovie.getLanguage());
             existingMovie.setReleaseDate(updatedMovie.getReleaseDate());

@@ -16,22 +16,18 @@ function App() {
       <Routes>
         <Route element={<MainLayout />}>
           <Route path="/" element={<Home />} />
+          
+          {/* Allow access to SignIn and SignUp for unauthenticated users */}
           <Route 
             path="/sign-in" 
-            element={
-              <ProtectedRoute>
-                <SignIn />
-              </ProtectedRoute>
-            } 
+            element={<ProtectedRoute><SignIn /></ProtectedRoute>} 
           />
           <Route 
             path="/sign-up" 
-            element={
-              <ProtectedRoute>
-                <SignUp />
-              </ProtectedRoute>
-            } 
+            element={<ProtectedRoute><SignUp /></ProtectedRoute>} 
           />
+
+          {/* Protected routes for authenticated users */}
           <Route path="/my-movies" element={<MyMovies />} />
           <Route path="/movie" element={<AddEditMovie />} />
           <Route path="/view-movie/:id" element={<MovieDetial />} />

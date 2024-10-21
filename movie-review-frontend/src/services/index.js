@@ -47,7 +47,6 @@ const addMovie = async (userId, movieData) => {
 
 const getMovies = async (userId) => {
   try {
-    console.log(userId);
 
     const response = await axiosInstance.get(`/api/v1/movies/user/${userId}`); // Include userId in the URL
     return response.data;
@@ -73,7 +72,6 @@ const addReview = async (movieId, review) => {
       `/api/v1/movies/${movieId}/reviews`,
       review
     );
-    console.log("Review submitted:", response.data);
   } catch (error) {
     console.error("Error submitting review:", error);
   }
@@ -90,6 +88,7 @@ const getRatedMovies = async (page,itemsPerPage) => {
 
 const updateMovie = async (movieId, updatedMovieData) => {
   try {
+    
     const response = await axiosInstance.put(`/api/v1/movies/${movieId}`, updatedMovieData);
     return response.data;
   } catch (error) {

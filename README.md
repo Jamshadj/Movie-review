@@ -121,3 +121,62 @@ Contributions are welcome! Please feel free to submit a pull request or open an 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 EOL
+
+
+### DOcker Run
+
+
+Prerequisites:
+Install Docker if you haven’t already.
+Ensure Docker is running on your machine.
+Steps to Run the Containers:
+Pull the Frontend and Backend Images from Docker Hub:
+
+Open a terminal and run the following commands to pull the images from Docker Hub:
+
+bash
+Copy code
+docker pull jamshadalij2004/movie-review-frontend
+docker pull jamshadalij2004/movie-review-backend
+Run the Backend Container:
+
+Assuming your backend is connected to a MySQL database, you'll first need to make sure the database is set up.
+
+If you have the database running locally or through a Docker container, use its address, username, and password when running the backend container.
+
+Here’s how to run the backend image, specifying any necessary environment variables (e.g., database connection info):
+
+bash
+Copy code
+docker run -d -p 8080:8080 \
+--name movie-review-backend \
+-e SPRING_DATASOURCE_URL=jdbc:mysql://<your-db-host>:3306/<your-db-name> \
+-e SPRING_DATASOURCE_USERNAME=<your-db-username> \
+-e SPRING_DATASOURCE_PASSWORD=<your-db-password> \
+jamshadalij2004/movie-review-backend
+Replace the placeholders (<your-db-host>, <your-db-name>, etc.) with the appropriate values for your MySQL database.
+
+This command will:
+
+Run the container in the background (-d).
+Expose port 8080 on the container and map it to port 8080 on your machine.
+Set environment variables for database connection.
+Run the Frontend Container:
+
+Now, you can run the frontend container, which communicates with the backend:
+
+bash
+Copy code
+docker run -d -p 3000:3000 \
+--name movie-review-frontend \
+-e REACT_APP_API_URL=http://localhost:8080 \
+jamshadalij2004/movie-review-frontend
+This command will:
+
+Run the frontend container in the background.
+Expose port 3000 on your machine, where the frontend will be accessible.
+Pass the backend API URL to the frontend via the REACT_APP_API_URL environment variable.
+Access the Application:
+
+Frontend: Open your browser and go to http://localhost:3000 to view the Movie Review Application's frontend.
+Backend: If you want to check the backend API separately, you can go to http://localhost:8080.
